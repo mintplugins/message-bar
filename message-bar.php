@@ -164,8 +164,8 @@ add_filter( 'option_page_capability_moveplugins_msg_bar_options', 'moveplugins_m
  */
 function moveplugins_msg_bar_plugin_options_add_page() {
 	 add_options_page(
-		__( 'Message Bar Options', 'moveplugins_msg_bar' ),
-		__( 'Message Bar Options', 'moveplugins_msg_bar' ),
+		__( 'Message Bar', 'moveplugins_msg_bar' ),
+		__( 'Message Bar', 'moveplugins_msg_bar' ),
 		'manage_options',
 		'moveplugins_msg_bar_options',
 		'moveplugins_msg_bar_plugin_options_render_page'
@@ -222,7 +222,6 @@ function moveplugins_msg_bar_plugin_options_render_page() {
 	<div class="wrap">
 		<?php screen_icon(); ?>
 		<h2><?php printf( __( 'Message Bar Options', 'moveplugins_msg_bar' ), 'moveplugins_msg_bar' ); ?></h2>
-		<?php settings_errors(); ?>
 
 		<form action="options.php" method="post">
 			<?php
