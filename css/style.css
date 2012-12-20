@@ -1,12 +1,12 @@
-.mint-themes-promo-bar {
+.moveplugins-promo-bar {
   background: #636460;
   border-top: 1px solid #484849;
   border-bottom: 1px solid #484849;
 }
-.mint-themes-promo-bar .container {
+.moveplugins-promo-bar .container {
   position: relative;
 }
-.mint-themes-promo-bar p {
+.moveplugins-promo-bar p {
   font-family: "ronnia", Helvetica, Arial, sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -17,30 +17,30 @@
   margin: 0;
   padding: 10px 0;
 }
-.mint-themes-promo-bar p a {
+.moveplugins-promo-bar p a {
   color: #ffffff;
   display: block;
 }
-.mint-themes-promo-bar .close {
+.moveplugins-promo-bar .close {
   position: absolute;
   right: 0;
   top: 12px;
 }
-.mint-themes-promo-bar .close a {
+.moveplugins-promo-bar .close a {
   color: #ffffff;
 }
-.mint-themes-promo-bar .close a:hover {
+.moveplugins-promo-bar .close a:hover {
   color: #e6e6e6;
   text-decoration: none;
 }
-.mint-themes-promo-bar.default {
+.moveplugins-promo-bar.default {
   background: #454e5c;
   border-color: #2f3949;
   -webkit-box-shadow: inset 0 1px 0 #69768c;
   -moz-box-shadow: inset 0 1px 0 #69768c;
   box-shadow: inset 0 1px 0 #69768c;
 }
-.mint-themes-promo-bar.blue {
+.moveplugins-promo-bar.blue {
   background: #017fc4;
   border-color: #004b7f;
   -webkit-box-shadow: inset 0 1px 0 #43ade0, inset 0 -1px 0 #428bbe;
@@ -56,7 +56,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0390d5', endColorstr='#0164a8', GradientType=0);
 }
-.mint-themes-promo-bar.green {
+.moveplugins-promo-bar.green {
   background: #5a8b2a;
   border-color: #264716;
   -webkit-box-shadow: inset 0 1px 0 #9fd83c;
@@ -72,7 +72,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7da92f', endColorstr='#487a28', GradientType=0);
 }
-.mint-themes-promo-bar.orange {
+.moveplugins-promo-bar.orange {
   background: #e37724;
   border-color: #b42e00;
   -webkit-box-shadow: inset 0 1px 0 #f1b95c;
@@ -88,7 +88,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eea735', endColorstr='#dc5618', GradientType=0);
 }
-.mint-themes-promo-bar.red {
+.moveplugins-promo-bar.red {
   background: #ad000cl;
   border-color: #6a0004;
   -webkit-box-shadow: inset 0 1px 0 #ff0027;

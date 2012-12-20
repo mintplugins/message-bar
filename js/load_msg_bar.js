@@ -6,13 +6,13 @@ jQuery(document).ready(function($) {
 	});
 	
 	//move bar to top of page
-	$('body').prepend($('.mint-themes-promo-bar'));
+	$('body').prepend($('.moveplugins-promo-bar'));
 	
 	//hide promo bar when clicked
-	$( '.mint-themes-promo-bar .close a' ).click(function(e) {
+	$( '.moveplugins-promo-bar .close a' ).click(function(e) {
 		e.preventDefault();
 
-		$( '.mint-themes-promo-bar' ).slideUp( 'fast' );
+		$( '.moveplugins-promo-bar' ).slideUp( 'fast' );
 	});
 
 });
