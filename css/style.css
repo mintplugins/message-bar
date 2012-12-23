@@ -33,74 +33,44 @@
   color: #e6e6e6;
   text-decoration: none;
 }
-.moveplugins-promo-bar.default {
-  background: #454e5c;
+.moveplugins-promo-bar {
+  background: #484849;
   border-color: #2f3949;
   -webkit-box-shadow: inset 0 1px 0 #69768c;
   -moz-box-shadow: inset 0 1px 0 #69768c;
   box-shadow: inset 0 1px 0 #69768c;
 }
-.moveplugins-promo-bar.blue {
-  background: #017fc4;
-  border-color: #004b7f;
-  -webkit-box-shadow: inset 0 1px 0 #43ade0, inset 0 -1px 0 #428bbe;
-  -moz-box-shadow: inset 0 1px 0 #43ade0, inset 0 -1px 0 #428bbe;
-  box-shadow: inset 0 1px 0 #43ade0, inset 0 -1px 0 #428bbe;
-  background-color: #027ec3;
-  background-image: -moz-linear-gradient(top, #0390d5, #0164a8);
-  background-image: -ms-linear-gradient(top, #0390d5, #0164a8);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0390d5), to(#0164a8));
-  background-image: -webkit-linear-gradient(top, #0390d5, #0164a8);
-  background-image: -o-linear-gradient(top, #0390d5, #0164a8);
-  background-image: linear-gradient(top, #0390d5, #0164a8);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0390d5', endColorstr='#0164a8', GradientType=0);
+
+@font-face {
+	font-family: 'move_plugins_close';
+	src:url('fonts/move_plugins_close.eot');
+	src:url('fonts/move_plugins_close.eot?#iefix') format('embedded-opentype'),
+		url('fonts/move_plugins_close.svg#move_plugins_close') format('svg'),
+		url('fonts/move_plugins_close.woff') format('woff'),
+		url('fonts/move_plugins_close.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
-.moveplugins-promo-bar.green {
-  background: #5a8b2a;
-  border-color: #264716;
-  -webkit-box-shadow: inset 0 1px 0 #9fd83c;
-  -moz-box-shadow: inset 0 1px 0 #9fd83c;
-  box-shadow: inset 0 1px 0 #9fd83c;
-  background-color: #68962c;
-  background-image: -moz-linear-gradient(top, #7da92f, #487a28);
-  background-image: -ms-linear-gradient(top, #7da92f, #487a28);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#7da92f), to(#487a28));
-  background-image: -webkit-linear-gradient(top, #7da92f, #487a28);
-  background-image: -o-linear-gradient(top, #7da92f, #487a28);
-  background-image: linear-gradient(top, #7da92f, #487a28);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7da92f', endColorstr='#487a28', GradientType=0);
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'move_plugins_close';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
 }
-.moveplugins-promo-bar.orange {
-  background: #e37724;
-  border-color: #b42e00;
-  -webkit-box-shadow: inset 0 1px 0 #f1b95c;
-  -moz-box-shadow: inset 0 1px 0 #f1b95c;
-  box-shadow: inset 0 1px 0 #f1b95c;
-  background-color: #e78729;
-  background-image: -moz-linear-gradient(top, #eea735, #dc5618);
-  background-image: -ms-linear-gradient(top, #eea735, #dc5618);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eea735), to(#dc5618));
-  background-image: -webkit-linear-gradient(top, #eea735, #dc5618);
-  background-image: -o-linear-gradient(top, #eea735, #dc5618);
-  background-image: linear-gradient(top, #eea735, #dc5618);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eea735', endColorstr='#dc5618', GradientType=0);
+
+/* Use the following CSS code if you want to have a class per icon */
+[class^="move_plugins_"]:before, [class*=" move_plugins_"]:before {
+	font-family: 'move_plugins_close';
+	font-style: normal;
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
 }
-.moveplugins-promo-bar.red {
-  background: #ad000cl;
-  border-color: #6a0004;
-  -webkit-box-shadow: inset 0 1px 0 #ff0027;
-  -moz-box-shadow: inset 0 1px 0 #ff0027;
-  box-shadow: inset 0 1px 0 #ff0027;
-  background-color: #b7000d;
-  background-image: -moz-linear-gradient(top, #ca0010, #9b0009);
-  background-image: -ms-linear-gradient(top, #ca0010, #9b0009);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ca0010), to(#9b0009));
-  background-image: -webkit-linear-gradient(top, #ca0010, #9b0009);
-  background-image: -o-linear-gradient(top, #ca0010, #9b0009);
-  background-image: linear-gradient(top, #ca0010, #9b0009);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ca0010', endColorstr='#9b0009', GradientType=0);
+.move_plugins_cancel:before {
+	content: "\78";
 }

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
 	//Header Sale Bar Cookie
-	$('#close_header_sale').click(function() {
+	$('#moveplugins-promo-bar-close_sale').click(function() {
 		document.cookie = 'showmessagebar=false';
 	});
 	

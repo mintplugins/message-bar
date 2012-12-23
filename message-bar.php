@@ -37,14 +37,18 @@ endif;
  */
 if ( ! function_exists( 'moveplugins_msg_bar_scripts' ) ):
 	function moveplugins_msg_bar_scripts() {
-		wp_enqueue_style( 'moveplugins_msg_bar_css', plugins_url() . '/message-bar/css/style.css' );
-		wp_enqueue_script( 'load_moveplugins_msg_bar_cookie', plugins_url( '/js/load_msg_bar.js', __FILE__ ) );
+		if (moveplugins_msg_bar_get_plugin_option( 'show-hide' ) != "1"){//theme option to show or hide
+			if (!isset($_COOKIE['showmessagebar'])){//cookie option to show or hide
+				wp_enqueue_style( 'moveplugins_msg_bar_css', plugins_url() . '/message-bar/css/style.css' );
+				wp_enqueue_script( 'load_moveplugins_msg_bar_cookie', plugins_url( '/js/load_msg_bar.js', __FILE__ ) );
+			}
+		}
 	}
 endif; //moveplugins_msg_bar_scripts
 add_action( 'wp_enqueue_scripts', 'moveplugins_msg_bar_scripts' );
 
 /**
- * Hook Function for Message Bar
+ * Footer Hook Function for Message Bar
  */
 if ( ! function_exists( 'moveplugins_msg_bar' ) ):
 	function moveplugins_msg_bar(){
@@ -53,8 +57,9 @@ if ( ! function_exists( 'moveplugins_msg_bar' ) ):
 				echo ('<div class="moveplugins-promo-bar ' . strtolower(moveplugins_msg_bar_get_plugin_option( 'color' )) .'">
 							<div class="container">
 								<p><a href="' . moveplugins_msg_bar_get_plugin_option( 'url' ) . '">' . moveplugins_msg_bar_get_plugin_option( 'text' ) .  '</a></p>
-						
-								<span class="close"><a id="close_sale" href="#" class="ss-icon">close</a></span>
+							
+								
+								<span class="close"><a id="moveplugins-promo-bar-close_sale" href="#"><div class="move_plugins_cancel"></div></a></span>
 							</div>
 						</div>');
 			}
@@ -67,11 +72,19 @@ add_action("wp_footer", "moveplugins_msg_bar");
 /**
  * Admin Page and options
  */ 
+function moveplugins_msg_bar_expansion_settings() {
+	do_action('moveplugins_msg_bar_expansion_settings');
+}
+
+/**
+ * Admin Page and options
+ */ 
 
 function moveplugins_msg_bar_plugin_options_init() {
+	
 	register_setting(
-		'moveplugins_msg_bar_options',
-		'moveplugins_msg_bar_options',
+		'moveplugins_msg_bar_settings',
+		'moveplugins_msg_bar_settings',
 		'moveplugins_msg_bar_plugin_options_validate'
 	);
 	//
@@ -79,27 +92,14 @@ function moveplugins_msg_bar_plugin_options_init() {
 		'settings',
 		__( 'Settings', 'moveplugins_msg_bar' ),
 		'__return_false',
-		'moveplugins_msg_bar_options'
-	);
-	
-	add_settings_field(
-		'color',
-		__( 'Color', 'moveplugins_msg_bar' ), 
-		'moveplugins_msg_bar_settings_field_textbox',
-		'moveplugins_msg_bar_options',
-		'settings',
-		array(
-			'name'        => 'color',
-			'value'       => moveplugins_msg_bar_get_plugin_option( 'color' ),
-			'description' => __( 'Color', 'moveplugins_msg_bar' )
-		)
+		'moveplugins_msg_bar_settings'
 	);
 	//
 	add_settings_field(
 		'text',
 		__( 'Coupon Text', 'moveplugins_msg_bar' ), 
 		'moveplugins_msg_bar_settings_field_textbox',
-		'moveplugins_msg_bar_options',
+		'moveplugins_msg_bar_settings',
 		'settings',
 		array(
 			'name'        => 'text',
@@ -113,7 +113,7 @@ function moveplugins_msg_bar_plugin_options_init() {
 		'url',
 		__( 'URL', 'moveplugins_msg_bar' ), 
 		'moveplugins_msg_bar_settings_field_textbox',
-		'moveplugins_msg_bar_options',
+		'moveplugins_msg_bar_settings',
 		'settings',
 		array(
 			'name'        => 'url',
@@ -126,7 +126,7 @@ function moveplugins_msg_bar_plugin_options_init() {
 		'show-hide',
 		__( 'Show or Hide', 'moveplugins_msg_bar' ), 
 		'moveplugins_msg_bar_settings_field_select',
-		'moveplugins_msg_bar_options',
+		'moveplugins_msg_bar_settings',
 		'settings',
 		array(
 			'name'        => 'show-hide',
@@ -136,13 +136,14 @@ function moveplugins_msg_bar_plugin_options_init() {
 		)
 	);
 	
-
-	
+	//expansion settings hook
+	moveplugins_msg_bar_expansion_settings();
+		
 }
 add_action( 'admin_init', 'moveplugins_msg_bar_plugin_options_init' );
 
 /**
- * Change the capability required to save the 'moveplugins_msg_bar_options' options group.
+ * Change the capability required to save the 'moveplugins_msg_bar_settings' options group.
  *
  * @see moveplugins_msg_bar_plugin_options_init() First parameter to register_setting() is the name of the options group.
  * @see moveplugins_msg_bar_plugin_options_add_page() The manage_options capability is used for viewing the page.
@@ -153,7 +154,7 @@ add_action( 'admin_init', 'moveplugins_msg_bar_plugin_options_init' );
 function moveplugins_msg_bar_option_page_capability( $capability ) {
 	return 'manage_options';
 }
-add_filter( 'option_page_capability_moveplugins_msg_bar_options', 'moveplugins_msg_bar_option_page_capability' );
+add_filter( 'option_page_capability_moveplugins_msg_bar_settings', 'moveplugins_msg_bar_option_page_capability' );
 
 /**
  * Add our plugin options page to the admin menu.
@@ -167,7 +168,7 @@ function moveplugins_msg_bar_plugin_options_add_page() {
 		__( 'Message Bar', 'moveplugins_msg_bar' ),
 		__( 'Message Bar', 'moveplugins_msg_bar' ),
 		'manage_options',
-		'moveplugins_msg_bar_options',
+		'moveplugins_msg_bar_options_page',
 		'moveplugins_msg_bar_plugin_options_render_page'
 	);
 	
@@ -180,10 +181,9 @@ add_action( 'admin_menu', 'moveplugins_msg_bar_plugin_options_add_page' );
  * @since Message Bar 1.0
  */
 function moveplugins_msg_bar_get_plugin_options() {
-	$saved = (array) get_option( 'moveplugins_msg_bar_options' );
+	$saved = (array) get_option( 'moveplugins_msg_bar_settings' );
 	
 	$defaults = array(
-		'color'     => '',
 		'text' 	=> '',
 		'url' 	=> '',
 		'show-hide' 	=> '',
@@ -205,7 +205,7 @@ function moveplugins_msg_bar_get_plugin_options() {
 function moveplugins_msg_bar_get_plugin_option( $key ) {
 	$options = moveplugins_msg_bar_get_plugin_options();
 	
-	if ( isset( $options[ $key ] ) )
+	//if ( isset( $options[ $key ] ) )
 		return $options[ $key ];
 		
 	return false;
@@ -225,8 +225,8 @@ function moveplugins_msg_bar_plugin_options_render_page() {
 
 		<form action="options.php" method="post">
 			<?php
-				settings_fields( 'moveplugins_msg_bar_options' );
-				do_settings_sections( 'moveplugins_msg_bar_options' );
+				settings_fields( 'moveplugins_msg_bar_settings' );
+				do_settings_sections( 'moveplugins_msg_bar_settings' );
 				submit_button();
 			?>
 		</form>
@@ -248,19 +248,10 @@ function moveplugins_msg_bar_plugin_options_render_page() {
 function moveplugins_msg_bar_plugin_options_validate( $input ) {
 	$output = array();
 	
-	
-	if ( isset ( $input[ 'color' ] ) )
-		$output[ 'color' ] = esc_attr( $input[ 'color' ] );
-		
-	if ( isset ( $input[ 'text' ] ) )
-		$output[ 'text' ] = esc_attr( $input[ 'text' ] );
-		
-	if ( isset ( $input[ 'url' ] ) )
-		$output[ 'url' ] = esc_attr( $input[ 'url' ] );
-		
-	if ( $input[ 'show-hide' ] == 0 || array_key_exists( $input[ 'show-hide' ], moveplugins_msg_bar_get_categories() ) )
-		$output[ 'show-hide' ] = $input[ 'show-hide' ];
-		
+	foreach ($input as $key => $option){
+		if ( isset ( $option ) )
+		$output[ $key ] = esc_attr( $option );
+	}	
 		
 	
 	$output = wp_parse_args( $output, moveplugins_msg_bar_get_plugin_options() );	
@@ -290,7 +281,7 @@ function moveplugins_msg_bar_settings_field_number( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo esc_attr( $id ); ?>">
 		<input type="number" min="<?php echo absint( $min ); ?>" max="<?php echo absint( $max ); ?>" step="<?php echo absint( $step ); ?>" name="<?php echo $name; ?>" id="<?php echo $id ?>" value="<?php echo esc_attr( $value ); ?>" />
@@ -315,7 +306,7 @@ function moveplugins_msg_bar_settings_field_textarea( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo $id; ?>">
 		<textarea name="<?php echo $name; ?>" id="<?php echo $id; ?>" class="code large-text" rows="3" cols="30"><?php echo esc_textarea( $value ); ?></textarea>
@@ -341,7 +332,7 @@ function moveplugins_msg_bar_settings_field_image_upload( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo $id; ?>">
 		<input type="text" id="<?php echo $id; ?>" name="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>">
@@ -367,7 +358,7 @@ function moveplugins_msg_bar_settings_field_textbox( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo $id; ?>">
 		<input type="text" id="<?php echo $id; ?>" name="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>">
@@ -393,7 +384,7 @@ function moveplugins_msg_bar_settings_field_checkbox_single( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo esc_attr( $id ); ?>">
 		<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>" <?php checked( $compare, $value ); ?>>
@@ -419,7 +410,7 @@ function moveplugins_msg_bar_settings_field_radio( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<?php foreach ( $options as $option_id => $option_label ) : ?>
 	<label title="<?php echo esc_attr( $option_label ); ?>">
@@ -448,7 +439,7 @@ function moveplugins_msg_bar_settings_field_select( $args = array() ) {
 	extract( $args );
 	
 	$id   = esc_attr( $name );
-	$name = esc_attr( sprintf( 'moveplugins_msg_bar_options[%s]', $name ) );
+	$name = esc_attr( sprintf( 'moveplugins_msg_bar_settings[%s]', $name ) );
 ?>
 	<label for="<?php echo $id; ?>">
 		<select name="<?php echo $name; ?>">
