@@ -38,9 +38,9 @@ endif;
 if ( ! function_exists( 'moveplugins_msg_bar_scripts' ) ):
 	function moveplugins_msg_bar_scripts() {
 		if (moveplugins_msg_bar_get_plugin_option( 'show-hide' ) != "1"){//theme option to show or hide
-			if (!isset($_COOKIE['showmessagebar'])){//cookie option to show or hide
+			if ($_COOKIE['showmessagebar'] != "false"){//cookie option to show or hide
 				wp_enqueue_style( 'moveplugins_msg_bar_css', plugins_url() . '/message-bar/css/style.css' );
-				wp_enqueue_script( 'load_moveplugins_msg_bar_cookie', plugins_url( '/js/load_msg_bar.js', __FILE__ ) );
+				wp_enqueue_script( 'load_moveplugins_msg_bar_cookie', plugins_url( '/js/load_msg_bar.js', __FILE__ ), array( 'jquery' ) );
 			}
 		}
 	}
@@ -53,12 +53,18 @@ add_action( 'wp_enqueue_scripts', 'moveplugins_msg_bar_scripts' );
 if ( ! function_exists( 'moveplugins_msg_bar' ) ):
 	function moveplugins_msg_bar(){
 		if (moveplugins_msg_bar_get_plugin_option( 'show-hide' ) != "1"){//theme option to show or hide
-			if (!isset($_COOKIE['showmessagebar'])){//cookie option to show or hide
-				echo ('<div class="moveplugins-promo-bar ' . strtolower(moveplugins_msg_bar_get_plugin_option( 'color' )) .'">
+			if ($_COOKIE['showmessagebar'] != "false"){//cookie option to show or hide
+				echo ('<div class="moveplugins-promo-bar">
 							<div class="container">
-								<p><a href="' . moveplugins_msg_bar_get_plugin_option( 'url' ) . '">' . moveplugins_msg_bar_get_plugin_option( 'text' ) .  '</a></p>
-							
+								<p>');
 								
+								if (moveplugins_msg_bar_get_plugin_option( 'url' ) != ""){ 
+									echo '<a href="' . moveplugins_msg_bar_get_plugin_option( 'url' ) . '">' . moveplugins_msg_bar_get_plugin_option( 'text' ) .  '</a>'; }
+								else{
+									echo moveplugins_msg_bar_get_plugin_option( 'text' );
+								}
+								
+								echo ('</p>
 								<span class="close"><a id="moveplugins-promo-bar-close_sale" href="#"><div class="move_plugins_cancel"></div></a></span>
 							</div>
 						</div>');
