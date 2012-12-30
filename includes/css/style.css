@@ -2,9 +2,12 @@
   background: #636460;
   border-top: 1px solid #484849;
   border-bottom: 1px solid #484849;
+  width:100%;
 }
-.moveplugins-promo-bar .container {
+.moveplugins-promo-bar .moveplugins-container {
   position: relative;
+  width:80%;
+  margin: 0 auto;
 }
 .moveplugins-promo-bar p {
   font-family: "ronnia", Helvetica, Arial, sans-serif;
