@@ -31,10 +31,10 @@
 }
 .moveplugins-promo-bar .close a {
   color: #ffffff;
+  text-decoration: none;
 }
 .moveplugins-promo-bar .close a:hover {
   color: #e6e6e6;
-  text-decoration: none;
 }
 .moveplugins-promo-bar {
   background: #484849;
